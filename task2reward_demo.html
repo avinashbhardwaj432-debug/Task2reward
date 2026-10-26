@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Task2Reward — Demo</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#667085;--accent:#5b4bdb;--accent2:#eeeaff;--line:#e7eaf2;--green:#12805c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink)}
+header{background:#fff;border-bottom:1px solid var(--line);padding:16px max(18px,calc((100% - 1000px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0}
+.brand{font-weight:800;font-size:19px;letter-spacing:-.4px}.brand span{color:var(--accent)}.pill{font-size:12px;padding:6px 9px;border-radius:99px;background:#fff4d8;color:#815b00;font-weight:700}
+main{max-width:1000px;margin:24px auto;padding:0 16px 40px}.hero{background:linear-gradient(125deg,#5144c8,#8274f2);border-radius:22px;padding:24px;color:#fff;display:flex;justify-content:space-between;gap:16px;align-items:center}.hero h1{font-size:clamp(24px,4vw,34px);margin:0 0 8px}.hero p{margin:0;color:#eeebff;max-width:540px;line-height:1.5}.points{background:#ffffff1f;border:1px solid #ffffff45;border-radius:16px;padding:14px 18px;min-width:125px}.points small{display:block;color:#e7e4ff}.points strong{font-size:30px}
+.notice{margin:16px 0;background:#fff8e7;border:1px solid #f4dfa1;color:#674d0b;padding:12px 14px;border-radius:12px;font-size:13px;line-height:1.5}
+.grid{display:grid;grid-template-columns:1.4fr 1fr;gap:18px;margin-top:18px}.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 5px 18px #1d2a4410}.panel h2{margin:0 0 4px;font-size:18px}.sub{color:var(--muted);font-size:13px;margin:0 0 15px}
+.task{display:flex;gap:12px;align-items:center;padding:14px 0;border-top:1px solid var(--line)}.task:first-of-type{border-top:0}.icon{width:42px;height:42px;display:grid;place-items:center;background:var(--accent2);border-radius:13px;font-size:20px;flex-shrink:0}.taskinfo{flex:1}.taskinfo strong{display:block;font-size:14px}.taskinfo small{color:var(--muted)}button{border:0;border-radius:10px;background:var(--accent);color:#fff;padding:10px 12px;font-weight:700;cursor:pointer;font-size:13px}button:disabled{background:#e7e9ef;color:#7c8495;cursor:default}.reward{border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:12px}.rewardtop{display:flex;align-items:center;gap:10px}.amazon{font-weight:800;font-size:14px}.reward p{font-size:12px;color:var(--muted);line-height:1.5;margin:8px 0 12px}.reward button{width:100%}.status{margin-top:14px;padding:12px;border-radius:12px;background:#f3f5fa;font-size:13px;color:#475467;line-height:1.5}.history{margin-top:18px}.historyitem{font-size:13px;padding:10px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px}.empty{font-size:13px;color:var(--muted);padding:12px 0}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#172033;color:#fff;padding:12px 16px;border-radius:12px;max-width:90%;font-size:13px;display:none;box-shadow:0 8px 30px #0002}
+footer{text-align:center;color:var(--muted);font-size:12px;margin-top:20px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.hero{align-items:flex-start;flex-direction:column}.points{min-width:0}.points strong{font-size:25px}header{padding:14px 16px}}
+</style>
+</head>
+<body>
+<header><div class="brand">Task<span>2</span>Reward</div><div class="pill">DEMO MODE</div></header>
+<main>
+<section class="hero">
+  <div><h1>टास्क पूरे करो, पॉइंट्स कमाओ</h1><p>छोटे टास्क पूरे करके अपना बैलेंस बढ़ाएँ। यह शुरुआती डेमो है—यह अभी असली Amazon वाउचर या रिडीम कोड जारी नहीं करता।</p></div>
+  <div class="points"><small>आपके पॉइंट्स</small><strong id="points">0</strong></div>
+</section>
+<div class="notice"><strong>ज़रूरी सूचना:</strong> यहाँ दिखाए गए टास्क और पॉइंट्स केवल परीक्षण के लिए हैं। असली Amazon वाउचर तभी दिए जा सकते हैं जब वैध सप्लायर, फंडिंग और सुरक्षित वितरण व्यवस्था जुड़ी हो। किसी कोड को असली बताकर नहीं दिखाया जाएगा।</div>
+<div class="grid">
+<section class="panel">
+  <h2>आज के टास्क</h2><p class="sub">टास्क पूरा करने के बाद बटन दबाएँ। डेमो में पूरा होना तुरंत दर्ज होगा।</p>
+  <div id="tasks"></div>
+</section>
+<aside class="panel">
+  <h2>रिवॉर्ड स्टोर</h2><p class="sub">रिवॉर्ड के लिए पॉइंट्स जमा करें।</p>
+  <div class="reward">
+    <div class="rewardtop"><div class="icon">🎁</div><div><div class="amazon">Amazon गिफ्ट वाउचर</div><small id="cost">500 पॉइंट्स</small></div></div>
+    <p>डेमो रिवॉर्ड। यह बटन केवल अनुरोध का नमूना दिखाता है; इससे असली वाउचर या रिडीम कोड नहीं मिलेगा।</p>
+    <button id="redeem" disabled>500 पॉइंट्स चाहिए</button>
+  </div>
+  <div class="status" id="status">स्थिति: अभी कोई रिवॉर्ड अनुरोध नहीं है।</div>
+  <div class="history"><h2>हाल की गतिविधि</h2><div id="history" class="empty">अभी कोई गतिविधि नहीं।</div></div>
+</aside>
+</div>
+<footer>Task2Reward Demo · यह Amazon की आधिकारिक ऐप नहीं है और Amazon से संबद्ध होने का दावा नहीं करती।</footer>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+const taskData=[
+ {id:'quiz',icon:'🧠',name:'मिनी क्विज़ पूरा करें',desc:'एक छोटा अभ्यास · 10 पॉइंट्स',points:10},
+ {id:'learn',icon:'📘',name:'सीखने वाला टास्क',desc:'एक टिप पढ़ें · 20 पॉइंट्स',points:20},
+ {id:'check',icon:'✅',name:'डेली चेक-इन',desc:'आज की उपस्थिति दर्ज करें · 5 पॉइंट्स',points:5}
+];
+let points=Number(localStorage.getItem('t2r_points')||0);
+let completed=JSON.parse(localStorage.getItem('t2r_completed')||'[]');
+let history=JSON.parse(localStorage.getItem('t2r_history')||'[]');
+function save(){localStorage.setItem('t2r_points',points);localStorage.setItem('t2r_completed',JSON.stringify(completed));localStorage.setItem('t2r_history',JSON.stringify(history))}
+function log(text){history.unshift({text,at:new Date().toLocaleString('hi-IN')});history=history.slice(0,5);save();renderHistory()}
+function toast(text){let t=document.getElementById('toast');t.textContent=text;t.style.display='block';setTimeout(()=>t.style.display='none',2600)}
+function renderTasks(){let root=document.getElementById('tasks');root.innerHTML='';taskData.forEach(t=>{let done=completed.includes(t.id);let row=document.createElement('div');row.className='task';row.innerHTML=`<div class="icon">${t.icon}</div><div class="taskinfo"><strong>${t.name}</strong><small>${t.desc}</small></div><button ${done?'disabled':''}>${done?'पूरा हुआ':'पूरा करें'}</button>`;row.querySelector('button').onclick=()=>{if(completed.includes(t.id))return;completed.push(t.id);points+=t.points;save();log(`${t.name} · +${t.points} पॉइंट्स`);render();toast(`आपको ${t.points} पॉइंट्स मिले!`)};root.appendChild(row)})}
+function renderHistory(){let root=document.getElementById('history');if(!history.length){root.className='empty';root.textContent='अभी कोई गतिविधि नहीं।';return}root.className='';root.innerHTML=history.map(h=>`<div class="historyitem"><span>${escapeHtml(h.text)}</span><small>${escapeHtml(h.at)}</small></div>`).join('')}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function render(){document.getElementById('points').textContent=points;let b=document.getElementById('redeem');b.disabled=points<500;b.textContent=points<500?`${500-points} और पॉइंट्स चाहिए`:'डेमो रिवॉर्ड अनुरोध';renderTasks();renderHistory()}
+document.getElementById('redeem').onclick=()=>{if(points<500)return;document.getElementById('status').textContent='स्थिति: डेमो अनुरोध बनाया गया। असली वाउचर जारी नहीं हुआ है।';log('Amazon वाउचर का डेमो अनुरोध (कोड जारी नहीं हुआ)');toast('डेमो अनुरोध दर्ज हुआ—असली कोड नहीं बना।')};
+render();
+</script>
+</body>
+</html>
